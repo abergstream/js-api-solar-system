@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+html {
+  font-size: 10px;
+}
+body {
+  background-color: #000;
+  margin: 1rem 0;
+  font-family: Roboto;
+}
+.search-form {
+  position: relative;
+}
+.search-form__input {
+  border: 0;
+  padding: 1rem;
+}
+.search-form__input:focus {
+  outline: none;
+}
+.option-list {
+  background-color: #333;
+  color: #dadada;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 25px;
+  z-index: 99;
+  &::before {
+    content: "";
+    border: 10px solid transparent;
+    border-color: transparent transparent #333 transparent;
+    position: absolute;
+    top: -20px;
+    left: 10%;
+  }
+}
+.option-list__item {
+  /* background-color: #; */
+  padding: 1.5rem 4rem 1.5rem 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #444;
+  }
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  height: var(--solar-system-height);
+  position: relative;
+}
