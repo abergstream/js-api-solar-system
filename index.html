@@ -9,25 +9,47 @@
     <script type="module" src="js/script.js" defer></script>
   </head>
   <body>
+    <div class="stars"></div>
     <form id="planetSearchForm" class="search-form">
       <input
         class="search-form__input"
-        list="planetDataList"
         name="planet"
         id="inputPlanetSearch"
         autocomplete="off"
+        placeholder="Planet.."
       />
+      <button id="searchButton" class="search-form__submit" type="submit">
+        Sök
+      </button>
       <ul class="option-list"></ul>
-      <input type="submit" />
     </form>
-    <section id="solarSystem" class="solar-system">
-      <div class="solar-system__stars"></div>
-    </section>
+    <section id="solarSystem" class="solar-system"></section>
+
     <section class="solar-system__planet-wrapper">
       <div class="solar-system__planet-info">
         <aside class="planet-info__planet"></aside>
         <div class="planet-info__info">
-          <!-- test -->
+          <h2 id="planetName" class="planet-info__planet-name"></h2>
+          <h3 id="planetLatinName" class="planet-info__latin-name"></h3>
+          <div id="planetDescription" class="planet-info__text"></div>
+          <hr class="planet-info__spacer" />
+          <div class="planet-info__grid grid-2">
+            <div class="planet-info__title">OMKRETS</div>
+            <div class="planet-info__title">FRÅN SOLEN</div>
+            <div id="planetCircumference" class="planet-info__text"></div>
+            <div id="planetDistance" class="planet-info__text"></div>
+          </div>
+          <div class="planet-info__grid grid-2">
+            <div class="planet-info__title">TEMPERATUR DAG</div>
+            <div class="planet-info__title">TEMPERATUR NATT</div>
+            <div id="planetDayTemp" class="planet-info__text"></div>
+            <div id="planetNightTemp" class="planet-info__text"></div>
+          </div>
+          <hr class="planet-info__spacer" />
+          <div class="planet-info__grid grid-1">
+            <div class="planet-info__title">Månar</div>
+            <div id="planetMoons" class="planet-info__text"></div>
+          </div>
         </div>
         <div class="planet-info__close">X</div>
       </div>
