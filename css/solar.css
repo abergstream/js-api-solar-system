@@ -9,26 +9,72 @@
   height: 1px;
   background: transparent;
   z-index: -1;
-  animation: stars 120s linear infinite;
+  animation: stars 60s linear infinite;
 }
 .solar-system {
-  gap: 3rem;
-  min-height: 550px;
+  gap: 1rem;
+  min-height: 650px;
   overflow: hidden;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 .solar-system__body {
   background-color: aqua;
   border-radius: 50%;
   aspect-ratio: 1 / 1;
-  transform: translateX(-20rem) rotateZ(-25deg);
+  transform: translateX(-15rem) rotateZ(-25deg);
   box-shadow: inset -20px -14px 10px rgba(0, 0, 0, 0.5);
   transition: 500ms;
   z-index: 1;
+  position: relative;
   cursor: pointer;
+}
+.solar-system__body:hover {
+  transform: translateX(-15rem) rotateZ(-0deg) scale(1.2);
+  box-shadow: 0px 0px 20px rgba(218, 218, 218, 0.65);
+  z-index: 3;
+}
+.solar-system__quick-info {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 180px;
+  height: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: translate(0%, -50%) rotateZ(0deg);
+  transition: 500ms;
+  border: 1px solid #dadada;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: transparent;
+  pointer-events: none;
+  overflow: hidden;
+  transform-origin: bottom left;
+  font-size: 1.3rem;
+}
+.quick-info__planet {
+  margin: 0;
+  text-align: center;
+  color: #cba620;
+}
+.quick-info__click {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 1rem;
+}
+.solar-system__body:hover .solar-system__quick-info {
+  top: -120px;
+  left: 50%;
+  height: auto;
+  color: #dadada;
+  transform: translate(-50%, -50%) rotateZ(0deg);
+  opacity: 1;
 }
 .solar-system__solen {
   background: radial-gradient(
@@ -195,15 +241,10 @@
     #0068b2
   );
 }
-.solar-system__body:hover {
-  /* transition: transform 500ms; */
-  transform-origin: 50%;
-  transform: translateX(-20rem) rotateZ(-17deg) scale(1.2);
-  box-shadow: 0px 0px 20px #dadadaa6;
-  z-index: 3;
-}
 
-.solar-system__planet-wrapper {
+/* PLANET INFO */
+
+.planet-wrapper {
   width: 100%;
   height: 100svh;
   background-color: rgba(0, 0, 0, 0);
@@ -216,7 +257,7 @@
   display: flex;
   align-items: center;
 }
-.solar-system__planet-info {
+.planet-info {
   background: linear-gradient(-90deg, rgb(6, 11, 34) 0%, rgb(10, 4, 14) 100%);
 
   min-height: 550px;
@@ -239,7 +280,6 @@
 .planet-info__info {
   width: 600px;
   padding: 2rem;
-  /* background-color: rgba(255, 0, 0, 0.1); */
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -270,6 +310,8 @@
   font-size: 2.5rem;
   margin: 0;
   letter-spacing: 0.4rem;
+  font-weight: normal;
+  color: #ffd029;
 }
 .planet-info__title {
   font-size: 1.8rem;
@@ -294,7 +336,7 @@
 .planet-info__spacer {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #ffd029;
   box-shadow: 0 0 10px 1px #333;
 }
 @keyframes stars {
@@ -322,5 +364,60 @@
   .solar-system__body:hover {
     transform: translateY(-25rem) rotateZ(-25deg);
     box-shadow: 0px 0px 0px #dadadaa6;
+  }
+  .solar-system__body:hover .solar-system__quick-info {
+    opacity: 0;
+  }
+  /* PLANET INFO */
+  .planet-wrapper {
+    overflow-y: scroll;
+  }
+  .planet-info {
+    background: linear-gradient(-90deg, rgb(6, 11, 34) 0%, rgb(10, 4, 14) 100%);
+    min-height: 100svh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem 0;
+    box-shadow: 0 0 10px #272727;
+    gap: 2rem;
+  }
+  .planet-info__info {
+    gap: 1rem;
+    width: 90%;
+  }
+  .planet-info__planet {
+    width: 150px;
+    height: 150px;
+    margin-top: 2rem;
+    transform: rotate(-25deg);
+    border-radius: 50%;
+  }
+  .planet-info__planet-name {
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 0.4rem;
+  }
+  .planet-info__latin-name {
+    font-size: 1.5rem;
+    margin: 0;
+    letter-spacing: 0.4rem;
+    font-weight: normal;
+    color: #ffd029;
+  }
+  .planet-info__title {
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    font-weight: bold;
+  }
+  .planet-info__text {
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    line-height: 2.2rem;
+    overflow-y: scroll;
+    max-height: 150px;
   }
 }

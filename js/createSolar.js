@@ -1,5 +1,5 @@
 const solarSystem = document.getElementById("solarSystem");
-const planetInfo = document.querySelector(".solar-system__planet-wrapper");
+const planetInfo = document.querySelector(".planet-wrapper");
 const selectedPlanet = document.querySelector(".planet-info__planet");
 const closeButton = document.querySelector(".planet-info__close");
 
@@ -9,7 +9,6 @@ export default function createSolarSystem(bodies) {
   generateStars();
   let sunCircumference;
   let maxHeight = 500;
-  let i = 0;
   let planetCircumference;
   bodies.forEach((body, index) => {
     if (index == 0) {
@@ -31,10 +30,6 @@ export default function createSolarSystem(bodies) {
     planet.style.width = `${planetCircumference}px`;
     planet.style.height = `${planetCircumference}px`;
 
-    index != 0
-      ? planet.classList.add("solar-system__body", `solar-system__${name}`)
-      : planet.classList.add(`solar-system__${name}`);
-
     // Add eventlistener to view more info about the planet
     planet.addEventListener("click", () => {
       viewPlanet(body);
@@ -45,9 +40,46 @@ export default function createSolarSystem(bodies) {
         closePlanet();
       }
     });
+
+    // If body isn't the sun
+    if (index != 0) {
+      planet.classList.add("solar-system__body", `solar-system__${name}`);
+      planet.appendChild(quickInfoFn(body));
+    } else {
+      planet.classList.add(`solar-system__${name}`);
+    }
+
     solarSystem.appendChild(planet);
-    i += 200;
   });
+}
+function quickInfoFn(planet) {
+  const quickInfoWrapper = document.createElement("div");
+  quickInfoWrapper.classList.add("solar-system__quick-info");
+
+  const planetNameElement = document.createElement("h2");
+  planetNameElement.classList.add("quick-info__planet");
+  planetNameElement.textContent = planet.name;
+
+  const circumferenceElement = document.createElement("div");
+  circumferenceElement.textContent = `Omkrets: ${formatThousands(
+    planet.circumference
+  )} km`;
+
+  const distanceElement = document.createElement("div");
+  distanceElement.textContent = `${formatThousands(
+    planet.distance
+  )} km från solen`;
+
+  const clickForMoreElement = document.createElement("div");
+  clickForMoreElement.classList.add("quick-info__click");
+  clickForMoreElement.textContent = "KLICKA FÖR MER INFO";
+  quickInfoWrapper.append(
+    planetNameElement,
+    circumferenceElement,
+    distanceElement,
+    clickForMoreElement
+  );
+  return quickInfoWrapper;
 }
 export function viewPlanet(planet) {
   const planetName = document.getElementById("planetName");
@@ -67,13 +99,16 @@ export function viewPlanet(planet) {
   const planetNightTemp = document.getElementById("planetNightTemp");
   planetNightTemp.textContent = `${planet.temp.night}°C`;
   const planetMoons = document.getElementById("planetMoons");
-  let moons = "";
   const sortedMoons = planet.moons;
   sortedMoons.sort();
+
+  let moons = "";
   if (sortedMoons.length > 0) {
     sortedMoons.forEach((moon, index) => {
       // Don't add the comma if the content is last in the array
-      index == sortedMoons - 1 ? (moons += `${moon}`) : (moons += `${moon}, `);
+      index == sortedMoons.length - 1
+        ? (moons += `${moon}`)
+        : (moons += `${moon}, `);
     });
   } else {
     moons = "Det finns inga upptäckta månar... ännu";
@@ -86,7 +121,7 @@ export function viewPlanet(planet) {
   selectedPlanet.classList.add(`solar-system__${name}`, "planet-info__planet");
   planetInfo.style.left = 0;
 }
-function closePlanet() {
+export function closePlanet() {
   selectedPlanet.classList.remove(`solar-system__${planetClassName}`);
   planetInfo.style.left = "100%";
 }

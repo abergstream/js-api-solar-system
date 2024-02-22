@@ -1,4 +1,4 @@
-import { viewPlanet } from "./createSolar.js";
+import { viewPlanet, closePlanet } from "./createSolar.js";
 const planetForm = document.getElementById("planetSearchForm");
 const planetSearch = document.getElementById("inputPlanetSearch");
 const searchButton = document.getElementById("searchButton");
@@ -48,6 +48,11 @@ export function addEventListeners(bodies) {
       planetDataList.style.display = "none";
     }, 200);
   });
+  document.body.addEventListener("keyup", (e) => {
+    if (e.key == "Escape") {
+      closePlanet();
+    }
+  });
 }
 
 function checkPlanet(bodies, planet) {
@@ -64,7 +69,8 @@ function checkPlanet(bodies, planet) {
   });
   if (!findPlanet) {
     console.log("Planeten finns inte");
-    planetSearch.style.borderColor = "red";
-    searchButton.style.borderColor = "red";
+    const errorColor = "#660700";
+    planetSearch.style.borderColor = errorColor;
+    searchButton.style.borderColor = errorColor;
   }
 }
