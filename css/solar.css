@@ -57,6 +57,8 @@
   overflow: hidden;
   transform-origin: bottom left;
   font-size: 1.3rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 5;
 }
 .quick-info__planet {
   margin: 0;
@@ -69,7 +71,7 @@
   font-size: 1rem;
 }
 .solar-system__body:hover .solar-system__quick-info {
-  top: -120px;
+  top: -100px;
   left: 50%;
   height: auto;
   color: #dadada;

@@ -1,11 +1,23 @@
+/*
+  SEE NUMBER IN CODE, INDEX LIST IN THE TOP FOR A LESS MESSY CODE
+
+  1. FIRST I MADE THE PLANETS PROPORTIONAL TO THE SUN BUT THEY GOT REALLY SMALL
+  THEN I MADE THIS SCRIPT, THAT THE PLANETS GETS 5 TIMES THEIR PROPORTIONAL SIZE
+    
+  2. BUT THE SIZE DIFFERENCE WAS TOO BIG FOR MY TASTE, 
+  SO THE SMALLER PLANETS GETS 3 TIMES BIGGER
+  AND THE BIGGER PLANETS GETS 1.5 TIMES SMALLER
+*/
+
 const solarSystem = document.getElementById("solarSystem");
 const planetInfo = document.querySelector(".planet-wrapper");
 const selectedPlanet = document.querySelector(".planet-info__planet");
 const closeButton = document.querySelector(".planet-info__close");
 
+// Making this variable outside the function because it gets its value in one function and used in another
 let planetClassName = "";
+
 export default function createSolarSystem(bodies) {
-  // const planetList = document.createElement("ul");
   generateStars();
   let sunCircumference;
   let maxHeight = 500;
@@ -14,34 +26,42 @@ export default function createSolarSystem(bodies) {
     if (index == 0) {
       sunCircumference = body.circumference;
     }
+    // GETS THE NUMBER TO MULTIPLY, FOR PROPORTION WITH THE SUN. 3 DECIMALS
     const multiplyBy = (body.circumference / sunCircumference).toFixed(3);
-
-    // Make the planets 5 times bigger than the actualy difference to the sun
+    /*
+      1. BIGGER PLANETS
+    */
     index != 0
       ? (planetCircumference = maxHeight * multiplyBy * 5)
       : (planetCircumference = maxHeight * multiplyBy);
 
-    // Make smaller planets bigger
+    /*
+      2. EVENING OUT THE SIZES
+    */
     planetCircumference < 50 ? (planetCircumference *= 3) : "";
     planetCircumference > 200 ? (planetCircumference /= 1.5) : "";
+
     const planet = document.createElement("div");
     const name = body.name.toLowerCase();
 
     planet.style.width = `${planetCircumference}px`;
     planet.style.height = `${planetCircumference}px`;
 
-    // Add eventlistener to view more info about the planet
+    // ADD EVENTLISTENER TO VIEW MORE INFO ABOUT THE PLANETS
     planet.addEventListener("click", () => {
       viewPlanet(body);
     });
+    // CLOSE BUTTON IN MORE-INFO-MODAL
     closeButton.addEventListener("click", closePlanet);
+
+    // THE BLURRY BACKGROUND IN MODAL WILL CLOSE THE MODAL
     planetInfo.addEventListener("click", (e) => {
       if (e.currentTarget == e.target) {
         closePlanet();
       }
     });
 
-    // If body isn't the sun
+    // ADD ONE MORE CLASS AND QUICKINFO FOR HOVER IF THE BODY IS NOT THE SUN
     if (index != 0) {
       planet.classList.add("solar-system__body", `solar-system__${name}`);
       planet.appendChild(quickInfoFn(body));
@@ -52,6 +72,7 @@ export default function createSolarSystem(bodies) {
     solarSystem.appendChild(planet);
   });
 }
+// INFORMATION THAT SHOWS WHEN HOVERING A PLANET (NOT THE SUN)
 function quickInfoFn(planet) {
   const quickInfoWrapper = document.createElement("div");
   quickInfoWrapper.classList.add("solar-system__quick-info");
@@ -81,6 +102,8 @@ function quickInfoFn(planet) {
   );
   return quickInfoWrapper;
 }
+
+// MODAL FOR MORE INFORMATION ABOUT THE PLANET
 export function viewPlanet(planet) {
   const planetName = document.getElementById("planetName");
   planetName.textContent = planet.name;
@@ -99,13 +122,15 @@ export function viewPlanet(planet) {
   const planetNightTemp = document.getElementById("planetNightTemp");
   planetNightTemp.textContent = `${planet.temp.night}°C`;
   const planetMoons = document.getElementById("planetMoons");
+
+  // SORT MOONS BY NAME
   const sortedMoons = planet.moons;
   sortedMoons.sort();
 
   let moons = "";
   if (sortedMoons.length > 0) {
     sortedMoons.forEach((moon, index) => {
-      // Don't add the comma if the content is last in the array
+      // DON'T ADD THE COMMA IF THE CONTENT IS LAST IN THE ARRAY
       index == sortedMoons.length - 1
         ? (moons += `${moon}`)
         : (moons += `${moon}, `);
