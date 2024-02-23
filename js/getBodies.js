@@ -20,7 +20,6 @@ export default async function getBodies() {
         const data = await response.json();
         bodies = data.bodies;
         localStorage.setItem("bodies", JSON.stringify(bodies));
-        console.log("From: API");
       } catch (error) {
         // Error fetching bodies from API
         console.error(
@@ -34,7 +33,7 @@ export default async function getBodies() {
       );
     }
   } else {
-    // console.log("From: localStorage");
+    //  Get bodies from localstorage.
     bodies = JSON.parse(localStorage.getItem("bodies"));
   }
   return bodies;
