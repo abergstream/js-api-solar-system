@@ -1,8 +1,10 @@
+import createSolarSystem from "./createSolar.js";
 import { viewPlanet, closePlanet } from "./createSolar.js";
 const planetForm = document.getElementById("planetSearchForm");
 const planetSearch = document.getElementById("inputPlanetSearch");
 const searchButton = document.getElementById("searchButton");
 const planetDataList = document.querySelector(".option-list");
+const toggleProportion = document.getElementById("toggleProportion");
 
 export default function createOptionList(bodies, onload) {
   const planetSearchLowercase = planetSearch.value.toLowerCase();
@@ -52,6 +54,9 @@ export function addEventListeners(bodies) {
     if (e.key == "Escape") {
       closePlanet();
     }
+  });
+  toggleProportion.addEventListener("input", () => {
+    createSolarSystem(bodies, toggleProportion.checked);
   });
 }
 

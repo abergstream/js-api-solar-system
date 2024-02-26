@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap");
 html {
   font-size: 10px;
 }
@@ -20,6 +21,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  z-index: 2;
 }
 .search-form__input {
   border: 0;
@@ -81,6 +83,52 @@ body {
   align-items: center;
   height: var(--solar-system-height);
   position: relative;
+}
+.proportion-wrapper {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.proportion-checkbox {
+  display: none;
+}
+.proportion-label {
+  display: block;
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #dadada;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 2rem rgba(255, 0, 0, 0.25);
+  position: relative;
+}
+.proportion-label::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 32%;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 1px solid #dadada;
+  transform: translate(-50%, -50%);
+  transition: 300ms;
+  box-shadow: inset 0px 0px 8px #dadada;
+}
+.proportion-checkbox:checked ~ .proportion-label::before {
+  left: 68%;
+}
+.proportion-checkbox:checked ~ .proportion-label {
+  box-shadow: inset 0 0 2rem rgba(0, 255, 0, 0.25);
+}
+.proportion-text {
+  font-family: "Reenie Beanie", cursive;
+  color: #dadada;
+  font-size: 2rem;
+  margin: 1rem 0 0;
 }
 @media screen and (max-width: 1080px) {
   .search-form {

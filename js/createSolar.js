@@ -17,8 +17,8 @@ const closeButton = document.querySelector(".planet-info__close");
 // Making this variable outside the function because it gets its value in one function and used in another
 let planetClassName = "";
 
-export default function createSolarSystem(bodies) {
-  generateStars();
+export default function createSolarSystem(bodies, proportional) {
+  solarSystem.textContent = "";
   let sunCircumference;
   let maxHeight = 500;
   let planetCircumference;
@@ -31,16 +31,19 @@ export default function createSolarSystem(bodies) {
     /*
       1. BIGGER PLANETS
     */
-    index != 0
-      ? (planetCircumference = maxHeight * multiplyBy * 5)
-      : (planetCircumference = maxHeight * multiplyBy);
+    if (proportional) {
+      planetCircumference = maxHeight * multiplyBy;
+    } else {
+      index != 0
+        ? (planetCircumference = maxHeight * multiplyBy * 5)
+        : (planetCircumference = maxHeight * multiplyBy);
 
-    /*
+      /*
       2. EVENING OUT THE SIZES
-    */
-    planetCircumference < 50 ? (planetCircumference *= 3) : "";
-    planetCircumference > 200 ? (planetCircumference /= 1.5) : "";
-
+      */
+      planetCircumference < 50 ? (planetCircumference *= 3) : "";
+      planetCircumference > 200 ? (planetCircumference /= 1.5) : "";
+    }
     const planet = document.createElement("div");
     const name = body.name.toLowerCase();
 
@@ -144,13 +147,21 @@ export function viewPlanet(planet) {
   selectedPlanet.style.position = "static";
   selectedPlanet.style.cursor = "auto";
   selectedPlanet.classList.add(`solar-system__${name}`, "planet-info__planet");
-  planetInfo.style.left = 0;
+  // planetInfo.style.dislay = "flex";
+  // planetInfo.style.left = 0;
+  planetInfo.style.display = "flex";
+  setTimeout(() => {
+    planetInfo.style.left = 0;
+  }, 200);
 }
 export function closePlanet() {
   selectedPlanet.classList.remove(`solar-system__${planetClassName}`);
   planetInfo.style.left = "100%";
+  setTimeout(() => {
+    planetInfo.style.display = "none";
+  }, 200);
 }
-function generateStars() {
+export function generateStars() {
   const stars = document.querySelector(".stars");
   let boxshadow = "";
   const width = window.screen.width;
