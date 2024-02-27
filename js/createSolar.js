@@ -1,14 +1,3 @@
-/*
-  SEE NUMBER IN CODE, INDEX LIST IN THE TOP FOR A LESS MESSY CODE
-
-  1. FIRST I MADE THE PLANETS PROPORTIONAL TO THE SUN BUT THEY GOT REALLY SMALL
-  THEN I MADE THIS SCRIPT, THAT THE PLANETS GETS 5 TIMES THEIR PROPORTIONAL SIZE
-    
-  2. BUT THE SIZE DIFFERENCE WAS TOO BIG FOR MY TASTE, 
-  SO THE SMALLER PLANETS GETS 3 TIMES BIGGER
-  AND THE BIGGER PLANETS GETS 1.5 TIMES SMALLER
-*/
-
 const solarSystem = document.getElementById("solarSystem");
 const planetInfo = document.querySelector(".planet-wrapper");
 const selectedPlanet = document.querySelector(".planet-info__planet");
@@ -26,21 +15,20 @@ export default function createSolarSystem(bodies, proportional) {
     if (index == 0) {
       sunCircumference = body.circumference;
     }
-    // GETS THE NUMBER TO MULTIPLY, FOR PROPORTION WITH THE SUN. 3 DECIMALS
+
+    // Gets the number to multiply by for proportion with the sun, 3 decimals
     const multiplyBy = (body.circumference / sunCircumference).toFixed(3);
-    /*
-      1. BIGGER PLANETS
-    */
+
+    // If argument proportional is true, make the planets proportional
     if (proportional) {
       planetCircumference = maxHeight * multiplyBy;
     } else {
+      // Else, make the planets 5 times bigger than the actual size
       index != 0
         ? (planetCircumference = maxHeight * multiplyBy * 5)
         : (planetCircumference = maxHeight * multiplyBy);
 
-      /*
-      2. EVENING OUT THE SIZES
-      */
+      // Smaller planets gets 3 times bigger and larger planets gets 1.5 times smaller
       planetCircumference < 50 ? (planetCircumference *= 3) : "";
       planetCircumference > 200 ? (planetCircumference /= 1.5) : "";
     }
@@ -50,21 +38,22 @@ export default function createSolarSystem(bodies, proportional) {
     planet.style.width = `${planetCircumference}px`;
     planet.style.height = `${planetCircumference}px`;
 
-    // ADD EVENTLISTENER TO VIEW MORE INFO ABOUT THE PLANETS
+    // Add eventlistener to view more info about the planets
     planet.addEventListener("click", () => {
       viewPlanet(body);
     });
-    // CLOSE BUTTON IN MORE-INFO-MODAL
+
+    // Close button in more-ionfo-modal
     closeButton.addEventListener("click", closePlanet);
 
-    // THE BLURRY BACKGROUND IN MODAL WILL CLOSE THE MODAL
+    // The blurry background in modal will close the modal
     planetInfo.addEventListener("click", (e) => {
       if (e.currentTarget == e.target) {
         closePlanet();
       }
     });
 
-    // ADD ONE MORE CLASS AND QUICKINFO FOR HOVER IF THE BODY IS NOT THE SUN
+    // Add one more class for planets and quickinfo if the body is not the sun
     if (index != 0) {
       planet.classList.add("solar-system__body", `solar-system__${name}`);
       planet.appendChild(quickInfoFn(body));
@@ -75,7 +64,8 @@ export default function createSolarSystem(bodies, proportional) {
     solarSystem.appendChild(planet);
   });
 }
-// INFORMATION THAT SHOWS WHEN HOVERING A PLANET (NOT THE SUN)
+
+// Information that shows when hovering a planet (not the sun)
 function quickInfoFn(planet) {
   const quickInfoWrapper = document.createElement("div");
   quickInfoWrapper.classList.add("solar-system__quick-info");
@@ -106,7 +96,7 @@ function quickInfoFn(planet) {
   return quickInfoWrapper;
 }
 
-// MODAL FOR MORE INFORMATION ABOUT THE PLANET
+// Modal for more information about the planet
 export function viewPlanet(planet) {
   const planetName = document.getElementById("planetName");
   planetName.textContent = planet.name;
@@ -126,14 +116,14 @@ export function viewPlanet(planet) {
   planetNightTemp.textContent = `${planet.temp.night}°C`;
   const planetMoons = document.getElementById("planetMoons");
 
-  // SORT MOONS BY NAME
+  // Sort moons by name ASC
   const sortedMoons = planet.moons;
   sortedMoons.sort();
 
   let moons = "";
   if (sortedMoons.length > 0) {
     sortedMoons.forEach((moon, index) => {
-      // DON'T ADD THE COMMA IF THE CONTENT IS LAST IN THE ARRAY
+      // Don't add comma if the content is last in the array
       index == sortedMoons.length - 1
         ? (moons += `${moon}`)
         : (moons += `${moon}, `);
@@ -142,24 +132,27 @@ export function viewPlanet(planet) {
     moons = "Det finns inga upptäckta månar... ännu";
   }
   planetMoons.textContent = moons;
-  const name = planet.name.toLowerCase();
-  planetClassName = name;
-  selectedPlanet.style.position = "static";
-  selectedPlanet.style.cursor = "auto";
-  selectedPlanet.classList.add(`solar-system__${name}`, "planet-info__planet");
-  // planetInfo.style.dislay = "flex";
-  // planetInfo.style.left = 0;
-  planetInfo.style.display = "flex";
+  planetClassName = planet.name.toLowerCase();
+
+  selectedPlanet.classList.add(
+    `solar-system__${planetClassName}`,
+    "planet-info__planet"
+  );
+
+  // Swipe in modal from right to left
+  planetInfo.style.left = 0;
+  // Set the position to absolute after 500ms to make it scrollable
   setTimeout(() => {
-    planetInfo.style.left = 0;
-  }, 200);
+    planetInfo.style.position = "absolute";
+  }, 500);
 }
+
 export function closePlanet() {
   selectedPlanet.classList.remove(`solar-system__${planetClassName}`);
+  // Make the position fixed to hide the x-scroll on the body when the modal is outside the screen
+  planetInfo.style.position = "fixed";
+  // Move the modal to the right, off the screen
   planetInfo.style.left = "100%";
-  setTimeout(() => {
-    planetInfo.style.display = "none";
-  }, 200);
 }
 export function generateStars() {
   const stars = document.querySelector(".stars");
@@ -173,13 +166,14 @@ export function generateStars() {
     const starTop = Math.floor(Math.random() * height);
     // Use the comma-separator if not in last loop
     i != 500
-      ? (boxshadow += `${starLeft}px ${starTop}px #FFF, `)
-      : (boxshadow += `${starLeft}px ${starTop}px #FFF`);
+      ? (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5), `)
+      : (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5)`);
   }
   // Apply the boxshadow
   stars.style.boxShadow = boxshadow;
 }
 
+// Make the numbers more readable
 function formatThousands(number) {
   return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
 }

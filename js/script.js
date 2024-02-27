@@ -1,8 +1,8 @@
 import getBodies from "./getBodies.js";
-import createOptionList from "./planetForm.js";
+import createOptionList from "./eventsAndForms.js";
 import createSolarSystem from "./createSolar.js";
 import { generateStars } from "./createSolar.js";
-import { addEventListeners } from "./planetForm.js";
+import { addEventListeners } from "./eventsAndForms.js";
 
 (async () => {
   const bodies = await getBodies();
