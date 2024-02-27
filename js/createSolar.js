@@ -160,12 +160,12 @@ export function generateStars() {
   const width = window.screen.width;
   const height = window.screen.height;
 
-  for (let i = 1; i <= 500; i++) {
+  for (let i = 1; i <= 700; i++) {
     // Get random position of the stars depending on maxWidth and maxHeight
     const starLeft = Math.floor(Math.random() * width);
     const starTop = Math.floor(Math.random() * height);
     // Use the comma-separator if not in last loop
-    i != 500
+    i != 700
       ? (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5), `)
       : (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5)`);
   }
