@@ -1,3 +1,5 @@
+// This module is for fetching the bodies, either from API or localStorage
+
 const BASE_URL = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com";
 const GET_KEY = "keys";
 const GET_PLANETS = "bodies";

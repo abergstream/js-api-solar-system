@@ -1,3 +1,4 @@
+// This module is for everyting around the form and addEventlisteners to already existing html elements
 import createSolarSystem from "./createSolar.js";
 import { viewPlanet, closePlanet } from "./createSolar.js";
 const planetForm = document.getElementById("planetSearchForm");
@@ -7,7 +8,8 @@ const planetDataList = document.querySelector(".option-list");
 const toggleProportion = document.getElementById("toggleProportion");
 const errorMessageWrapper = document.querySelector(".error-message-wrapper");
 const errorMessage = document.querySelector(".error-message");
-
+const planetInfo = document.querySelector(".planet-wrapper");
+const closeButton = document.querySelector(".planet-info__close");
 export default function createOptionList(bodies, onload) {
   // Make the input search lower case
   const planetSearchLowercase = planetSearch.value.toLowerCase();
@@ -70,14 +72,25 @@ export function addEventListeners(bodies) {
       planetDataList.style.display = "none";
     }, 200);
   });
+  toggleProportion.addEventListener("input", () => {
+    createSolarSystem(bodies, toggleProportion.checked);
+  });
+
+  // The blurry background in modal will close the modal
+  planetInfo.addEventListener("click", (e) => {
+    if (e.currentTarget == e.target) {
+      closePlanet();
+    }
+  });
+
+  // Close button in more-info-modal
+  closeButton.addEventListener("click", closePlanet);
+
   // Escape close the modal
   document.body.addEventListener("keyup", (e) => {
     if (e.key == "Escape") {
       closePlanet();
     }
-  });
-  toggleProportion.addEventListener("input", () => {
-    createSolarSystem(bodies, toggleProportion.checked);
   });
 }
 

@@ -1,7 +1,8 @@
+// This module is for everything in the solar system
+
 const solarSystem = document.getElementById("solarSystem");
 const planetInfo = document.querySelector(".planet-wrapper");
 const selectedPlanet = document.querySelector(".planet-info__planet");
-const closeButton = document.querySelector(".planet-info__close");
 
 // Making this variable outside the function because it gets its value in one function and used in another
 let planetClassName = "";
@@ -41,16 +42,6 @@ export default function createSolarSystem(bodies, proportional) {
     // Add eventlistener to view more info about the planets
     planet.addEventListener("click", () => {
       viewPlanet(body);
-    });
-
-    // Close button in more-ionfo-modal
-    closeButton.addEventListener("click", closePlanet);
-
-    // The blurry background in modal will close the modal
-    planetInfo.addEventListener("click", (e) => {
-      if (e.currentTarget == e.target) {
-        closePlanet();
-      }
     });
 
     // Add one more class for planets and quickinfo if the body is not the sun
