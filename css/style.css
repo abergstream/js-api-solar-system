@@ -50,6 +50,7 @@ body {
   color: #fff;
   border: 1px solid #dadada;
   border-left: none;
+  cursor: pointer;
   outline: none;
 }
 .option-list {
