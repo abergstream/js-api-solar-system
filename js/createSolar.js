@@ -111,18 +111,10 @@ export function viewPlanet(planet) {
   const sortedMoons = planet.moons;
   sortedMoons.sort();
 
-  let moons = "";
-  if (sortedMoons.length > 0) {
-    sortedMoons.forEach((moon, index) => {
-      // Don't add comma if the content is last in the array
-      index == sortedMoons.length - 1
-        ? (moons += `${moon}`)
-        : (moons += `${moon}, `);
-    });
-  } else {
-    moons = "Det finns inga upptäckta månar... ännu";
-  }
-  planetMoons.textContent = moons;
+  sortedMoons != 0
+    ? (planetMoons.textContent = sortedMoons.join(", "))
+    : (planetMoons.textContent = "Det finns inga upptäckta månar... ännu");
+
   planetClassName = planet.name.toLowerCase();
 
   selectedPlanet.classList.add(
@@ -151,14 +143,14 @@ export function generateStars() {
   const width = window.screen.width;
   const height = window.screen.height;
 
-  for (let i = 1; i <= 700; i++) {
+  for (let i = 1; i <= 500; i++) {
     // Get random position of the stars depending on maxWidth and maxHeight
     const starLeft = Math.floor(Math.random() * width);
     const starTop = Math.floor(Math.random() * height);
     // Use the comma-separator if not in last loop
-    i != 700
-      ? (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5), `)
-      : (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,.5)`);
+    i != 500
+      ? (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,1), `)
+      : (boxshadow += `${starLeft}px ${starTop}px rgba(255,255,255,1)`);
   }
   // Apply the boxshadow
   stars.style.boxShadow = boxshadow;
